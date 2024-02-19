@@ -1,0 +1,192 @@
+{%extends "index.html"%}
+{%block content%}
+<img class="img-title" src="../static/images/title.png" alt="logo" style="width: auto; height: 175px" />
+<form id="download-form" class="main-page1" method="GET" onkeydown="return event.key != 'Enter'">
+    <button class="paste" type="button" onclick="pasteFromClipboard()">
+        <img src="../static/images/paste.png" alt="link" />
+    </button>
+    <input type="text" autocomplete="off" name="url" id="url" placeholder="Search or Paste YT's URL here" />
+    <button class="reset" type="reset" onclick="reset()" style="background-color: black">
+        <img src="../static/images/clear.png" />
+    </button>
+
+
+    <button class="search" type="search" style="background-color: black" onclick="setManualAction('/search', this)"
+        value="Click for popup">
+        <img src="../static/images/search.png" />
+    </button>
+
+    <button class="proceed" id="proceed" onclick="proceed_submit()" type="button">
+        <img src="../static/images/proceed.png" alt="proceed" />
+    </button>
+</form>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        {% if videos %}
+        <h2 style="margin-bottom: 10px; margin-left: 5px">Search Results:</h2>
+        <div class="videos-container">
+            {% for video in videos[0:5] %}
+            <div class="video-item" onclick="redirectToHome('{{ video.url }}')">
+                <img style="object-fit: contain; width: 100%; height: 100%;" class="thumbnail"
+                    src="{{ video.thumbnail }}" alt="{{ video.title }}">
+                <a href="/home?url={{ video.url }}">{{ video.title }}</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="UserPage" id="UserPage" style="display: none">
+    <div class="UserPage-content">
+        <div class="Userpage-header" style="margin-left: 5px;">
+            {% if username == None %}
+                <h2>User: Not Logged In</h2>
+            {% else %}
+                <h2>{{ username }}'s history</h2>
+            {% endif %}
+            <span class="close" onclick="document.getElementById('UserPage').style.display = 'none';">&times;</span>
+        </div>
+        {% if username == None %}
+        <div class="login-page" style="display: none;">
+            <form class="login-form" action="/auth/login" method="POST">
+                <input type="text" name="username" placeholder="username" required/>
+                <input type="password" name="password" placeholder="password" required/>
+                <button style="height: 100%; background: white; color: black" type="submit">login</button>
+                <button type="button"
+                    onclick="document.getElementById('log-btn').style.display = 'flex'; document.getElementsByClassName('login-page')[0].style.display = 'none';">cancel</button>
+            </form>
+        </div>
+        <div class="register-page" style="display: none;">
+            <form class="register-form" action="/auth/register" method="POST">
+                <input type="text" name="username" placeholder="username" required/>
+                <input type="password" name="password" placeholder="password" required/>
+                <input type="password" name="confirm_password" placeholder="confirm password" required/>
+                <button style="height: 100%; background: white; color: black"type="submit">register</button>
+                <button type="button"
+                    onclick="document.getElementById('log-btn').style.display = 'flex'; document.getElementsByClassName('register-page')[0].style.display = 'none';">cancel</button>
+            </form>
+        </div>
+        <div class="login-register" id="log-btn">
+            <button
+                onclick="document.getElementById('log-btn').style.display = 'none'; document.getElementsByClassName('login-page')[0].style.display = 'flex';">login</button>
+            <button
+                onclick="document.getElementById('log-btn').style.display = 'none'; document.getElementsByClassName('register-page')[0].style.display = 'flex';">register</button>
+        </div>
+        {% else %}
+        <div class="user-info">
+            <div class="history-container">
+                {%for row in history[::-1] %}
+                    <div class="history-item" style="flex-direction: space-between;">
+                        <p style="color: white;"> {{row[0]}}</p>
+                        <a style="color:white" href="/home?url={{row[1]}}">{{row[2]}}</a>
+                    </div>
+                {%endfor%}
+            </div>
+            <a class="logout-btn" href="/auth/logout">logout</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="option">
+    <button type="button" style="margin-right: 20px; border: none; background: none" onclick="OpenUserPage()">
+        {% if username != None %}
+            <img src="../static/images/logged.png" alt="user" style="height: 100%; width: 100%;"/>
+        {% else %}
+            <img src="../static/images/user.png" alt="user" style="height: 100%; width: 100%;"/>
+        {% endif %}
+    </button>
+    <button id="video-button" onclick="setManualAction('/dl/video', this)">
+        <img style="height: 40px; width: auto; margin-right: 2px; margin-left: 10px" src="../static/images/demon1.png"
+            alt="video" />
+        video
+    </button>
+    <button id="advanced-button" onclick="setManualAction('/extract', this)">
+        <img style="height: 100%; width: 100%; object-fit: contain"src="../static/images/advanced.png" alt="advanced" />
+    </button>
+    <button id="audio-button" onclick="setManualAction('/dl/audio', this)">
+        audio
+        <img style="height: 43px; width: auto; margin-left: 2px" src="../static/images/demon2.png" alt="audio" />
+    </button>
+</div>
+
+{{msg}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        var urlValue = urlParams.get('url');
+        if (urlValue) {
+            document.getElementById('url').value = decodeURIComponent(urlValue);
+        }
+        var showResults = Boolean("{{show_results}}") || false; // Ensure it's a lowercase boolean
+        if (showResults) {
+            openModal();
+        }
+        // Set "video-button" as the default selected button
+        var defaultOption = document.getElementById("video-button");
+        if (defaultOption) {
+            setManualAction('/dl/video', defaultOption);
+        }
+    });
+
+    function reset() {
+        document.getElementById('url').value = '';
+    }
+
+    function setManualAction(action, button) {
+        // Remove the "selected" class from all buttons
+        var buttons = document.querySelectorAll('.option button');
+        buttons.forEach(function (btn) {
+            btn.classList.remove('selected');
+        });
+
+        // Set the "selected" class for the clicked button
+        button.classList.add("selected");
+
+        // Set the action for the form
+        document.getElementById("download-form").action = action;
+    }
+
+    function redirectToHome(url) {
+        window.location.href = '/home?url=' + encodeURIComponent(url);
+    }
+
+    function openModal() {
+        document.getElementById('myModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('myModal').style.display = 'none';
+    }
+
+    function OpenUserPage() {
+        var x = document.getElementById("UserPage");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function proceed_submit(){
+        youtubeRegex = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
+        if (youtubeRegex.test(document.getElementById("url").value) == false){
+            window.alert("Please enter a URL or search!")
+
+        }
+        else{
+            document.getElementById("download-form").submit();
+        }
+    }
+    function pasteFromClipboard() {
+        navigator.clipboard.readText().then(text => {
+            document.getElementById('url').value = text;
+            console.log('Pasted content: ', text);
+        });
+    }
+
+</script>
+{% endblock %}

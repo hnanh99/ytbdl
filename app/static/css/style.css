@@ -1,0 +1,700 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+/* home page style */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #d4d4d4;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+button {
+    border: none;
+    outline: none;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    /* 100% of viewport height */
+    background-color: black;
+}
+
+.Main-container {
+    width: 100%;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.main-page1 {
+    width: 80%;
+    height: 10vh;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    justify-content: center;
+    /* Center content horizontally */
+    align-items: center;
+    margin-bottom: 10%;
+}
+
+.main-page1 input[type="text"],
+.main-page1 .reset,
+.main-page1 .proceed,
+.main-page1 .paste,
+.main-page1 .search {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+    height: 40px;
+    /* Set same height for all elements */
+    margin-right: 10px;
+    /* Add spacing between elements */
+    margin-top: 10px;
+}
+
+.main-page1 input[type="text"] {
+    width: 40%;
+    color: white;
+    background: none;
+    border: none;
+    border-bottom: .1rem inset rgba(255, 255, 255, 0.5);
+    border-right: .1rem inset rgba(255, 255, 255, 0.5);
+    outline: none;
+    font-size: 18px;
+    line-height: 20px;
+    padding: 5px 8px;
+}
+
+.main-page1 input[type="text"]:focus {
+    border-bottom: .1rem inset rgb(255, 255, 255);
+    border-right: .1rem inset rgb(255, 255, 255);
+}
+
+.main-page1 .reset img,
+.main-page1 .proceed img,
+.main-page1 .paste img,
+.main-page1 .search img {
+    background-color: black;
+    height: 40px;
+    width: auto;
+    border: 0;
+    cursor: pointer;
+    vertical-align: middle;
+    /* Align images vertically within buttons */
+}
+
+.option {
+    width: 80%;
+    height: 10vh;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    justify-content: center;
+    /* Center content horizontally */
+    align-items: center;
+}
+
+.option button {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    height: 50px;
+    background-color: rgb(44, 44, 44);
+    color: white;
+    border: 1px solid rgba(84, 82, 82, 0.5);
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    /* Set same height for all elements */
+    cursor: pointer;
+    margin-top: 100px;
+}
+
+.option #advanced-button {
+    border-left: none;
+    border-right: none;
+}
+
+.option #video-button {
+    border-right: none;
+    border-radius: 10px 0px 0px 10px;
+}
+
+.option #audio-button {
+    border-left: none;
+    border-radius: 0px 10px 10px 0px;
+}
+
+.option button.selected {
+    color: black;
+    background-color: #f5f5f5;
+    border-color: #000000;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+}
+
+.option #advanced-button.selected {
+    border-left: none;
+    border-right: none;
+}
+
+/* pop up search page */
+.modal,
+.UserPage {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    margin-bottom: 10px;
+}
+
+/* Modal Content/Box */
+.modal-content,
+.UserPage-content {
+    background-color: #151515;
+    margin: 5% auto;
+    padding: 12px;
+    border: 1px solid #303030;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    width: 40%;
+}
+
+.UserPage-content .login-form,
+.UserPage-content .register-form,
+.UserPage-content .login-register {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    justify-content: center;
+    /* Center content horizontally */
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.UserPage-content .login-register {
+    height: 25vh;
+}
+
+.Userpage-header {
+    font: 14px 'Roboto', sans-serif;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.UserPage-content .login-form button,
+.UserPage-content .register-form button {
+    width: 90%;
+    height: 80%;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    justify-content: center;
+    /* Center content horizontally */
+    align-items: center;
+    flex-direction: row;
+    border: 1px solid rgb(255, 255, 255);
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: rgb(44, 44, 44);
+    color: white;
+    margin: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.UserPage-content .login-register button {
+    width: 95%;
+    height: 50%;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    justify-content: center;
+    /* Center content horizontally */
+    align-items: center;
+    flex: 1;
+    border: 1px solid rgb(255, 255, 255);
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: rgb(44, 44, 44);
+    color: white;
+    margin: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.UserPage-content .login-form input,
+.UserPage-content .register-form input {
+    width: 90%;
+    height: 65%;
+    display: flex;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    color: white;
+    background: none;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.modal-content div.videos-container,
+.UserPage-content div.history-container {
+    background-color: #000000;
+    border: 1px solid #303030;
+    border-radius: 15px;
+    width: 100%;
+    height: 65vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    text-align: center;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.video-item,
+.history-item {
+    margin-bottom: 10px;
+    border: solid 1px rgb(42, 42, 42);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.video-item a {
+    text-decoration: none;
+    color: white;
+}
+
+.video-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.logout-btn {
+    width: 100%;
+    height: 5vh;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: rgb(186, 1, 1);
+}
+
+/* video info style */
+.main-page2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+    width: 80%;
+    height: 68vh;
+    display: flex;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+}
+
+/* page 2 sector 1 */
+.sector1 {
+    width: 60%;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.main-page2 .sector1 .video-sector {
+    width: 100%;
+    height: 65%;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    justify-content: center;
+    /* Center content horizontally */
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid rgb(255, 255, 255);
+    border-top-left-radius: 10px;
+    padding: 5px
+}
+
+.main-page2 .sector1 .cut-sector {
+    width: 100%;
+    height: 35%;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    float: left;
+    /* Center content horizontally */
+    align-self: center;
+    flex-direction: row;
+    border: 1px solid rgb(255, 255, 255);
+    border-bottom-left-radius: 10px;
+}
+
+.main-page2 .sector1 .cut-sector .fstcut {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.main-page2 .sector1 .cut-sector .extract-time {
+    width: 100%;
+    height: 65%;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    /* Center content horizontally */
+    flex-direction: row;
+    color: white;
+}
+
+.main-page2 .sector1 .cut-sector .cutter-tittle {
+    height: 100%;
+    width: 15%;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border: 1px solid rgba(84, 82, 82, 0.5);
+    border-bottom-left-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.main-page2 .sector1 .cut-sector .preview {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.main-page2 .sector1 .cut-sector .extract-time .extract-start,
+.main-page2 .sector1 .cut-sector .extract-time .extract-end {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    justify-content: center;
+    /* Center content horizontally */
+    align-items: center;
+    flex-direction: column;
+}
+
+.main-page2 .sector1 .cut-sector .extract-time .extract-start button,
+.main-page2 .sector1 .cut-sector .extract-time .extract-end button {
+    width: 90%;
+    height: 35%;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    justify-content: center;
+    /* Center content horizontally */
+    align-items: center;
+    flex-direction: row;
+    border: 1px solid rgb(255, 255, 255);
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: rgb(44, 44, 44);
+    color: white;
+    margin: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+
+.main-page2 .sector1 .cut-sector .extract-time .extract-start input,
+.main-page2 .sector1 .cut-sector .extract-time .extract-end input {
+    width: 90%;
+    height: 65%;
+    display: flex;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    color: white;
+    background: none;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.main-page2 .sector1 .cut-sector .fstcut .cut-button {
+    width: 100%;
+    height: 35%;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    justify-content: center;
+    /* Center content horizontally */
+    align-items: center;
+}
+
+.main-page2 .sector1 .cut-sector .fstcut .cut-button button {
+    width: 95%;
+    height: 90%;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    justify-content: center;
+    /* Center content horizontally */
+    align-items: center;
+    border: 1px solid rgb(255, 255, 255);
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: rgb(44, 44, 44);
+    color: white;
+    margin: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+/* page 2 sector 2 */
+.main-page2 .sector2 {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    float: left;
+    justify-content: center;
+    /* Center content horizontally */
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid rgb(255, 255, 255);
+    padding: 5px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.main-page2 .sector2 .result-sector,
+.main-page2 .sector2 .qual-sector,
+.main-page2 .sector2 .format-sector {
+    color: white;
+    width: 95%;
+    height: 25%;
+    display: flex;
+    /* Enable flexbox for horizontal arrangement */
+    justify-content: center;
+    /* Center content horizontally */
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 5px;
+}
+
+.main-page2 .sector2 .result-sector {
+    height: 40%;
+}
+
+.main-page2 .sector2 .result-sector .result-head {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    background-color: rgb(44, 44, 44);
+    color: white;
+    border: 1px solid rgba(84, 82, 82, 0.5);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.main-page2 .sector2 .result-sector,
+.main-page2 .sector2 .qual-sector {
+    margin-bottom: 15px;
+}
+
+.main-page2 .sector2 .sector-title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+    height: 30%;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border: 1px solid rgba(84, 82, 82, 0.5);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.main-page2 .sector2 .qual-sector .quality-list,
+.main-page2 .sector2 .format-sector .format-list,
+.main-page2 .sector2 .result-sector .result-list {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.main-page2 .sector2 button {
+    height: 30px;
+    width: 50px;
+    background-color: rgb(44, 44, 44);
+    color: white;
+    border: 1px solid rgba(84, 82, 82, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    line-height: 20px;
+}
+
+.main-page2 .sector2 button.selected {
+    color: black;
+    background-color: #f5f5f5;
+    border-color: #000000;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+}
+
+.main-page2 .sector2 .result-sector .result-list {
+    flex-direction: row;
+}
+
+.main-page2 .sector2 .result-sector .result-list .thumbnail {
+    width: 44%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-page2 .sector2 .result-sector .video-info {
+    width: 32%;
+    height: 100%;
+    margin-left: 10px;
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+    padding: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    margin-top: 5px;
+    line-height: 20px;
+}
+
+.main-page2 .sector2 .result-sector .set-btn {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+}
+
+.main-page2 .sector2 .result-sector .set-btn button {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    border: 0.5px solid rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: rgb(44, 44, 44);
+    color: white;
+    margin: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    line-height: 20px;
+}
+
+.main-page2 .sector2 .result-sector .set-btn button.selected {
+    color: black;
+    background-color: #f5f5f5;
+    border-color: #000000;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+}
+
+.main-page2 .sector1 .cut-sector .cut-button button.selected {
+    color: black;
+    background-color: #f5f5f5;
+    border-color: #000000;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+}
